@@ -20,7 +20,6 @@ import { featuredProjects } from '@/data/featuredProjects';
 import { ContactForm } from '@/components/ContactForm';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
-import { Testimonials } from '@/components/Testimonials';
 
 const services = [
   { title: 'Enterprise Software Development', description: 'Build scalable, secure applications that drive business growth and operational efficiency. Reduce development time by 40% with modern frameworks.', icon: FaCubes },
@@ -437,20 +436,9 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-
-              <div className="space-y-4">
-                <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Testimonials</p>
-                <h2 className="text-3xl font-semibold text-white sm:text-4xl">What our clients say about working with us</h2>
-                <p className="max-w-2xl text-slate-400">Trusted feedback from leaders who relied on our technology, security, and automation expertise.</p>
-              </div>
             </div>
 
-            <div className="space-y-8">
-              <ContactForm />
-              <div className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6">
-                <Testimonials />
-              </div>
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>
