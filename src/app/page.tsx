@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import {
   FaArrowRight,
@@ -58,6 +59,87 @@ const features = [
     description: 'Clear communication, fast onboarding, and delivery that aligns with strategic goals.',
   },
 ];
+
+const getCardImage = (subject: string) => {
+  const text = subject.toLowerCase();
+
+  if (text.includes('mpesa') || text.includes('bank') || text.includes('fintech') || text.includes('payment') || text.includes('stripe')) {
+    return '/card-backgrounds/mpesa-integration.jpeg';
+  }
+
+  if (text.includes('cloud') || text.includes('devops') || text.includes('aws') || text.includes('azure') || text.includes('docker') || text.includes('kubernetes') || text.includes('deployment')) {
+    return '/card-backgrounds/cloud-devops.jpeg';
+  }
+
+  if (text.includes('erp') || text.includes('sap') || text.includes('postgres')) {
+    return '/card-backgrounds/erp-systems.jpeg';
+  }
+
+  if (text.includes('operational automation') || text.includes('workflow') || text.includes('support coverage') || text.includes('process automation')) {
+    return '/card-backgrounds/operational-automation.jpeg';
+  }
+
+  if (text.includes('ai') || text.includes('automation') || text.includes('robot')) {
+    return '/card-backgrounds/ai-automation.jpeg';
+  }
+
+  if (text.includes('consult') || text.includes('strategy') || text.includes('architecture') || text.includes('advisory') || text.includes('mission') || text.includes('vision') || text.includes('client-focused')) {
+    return '/card-backgrounds/it-consultancy.jpeg';
+  }
+
+  if (text.includes('portfolio') || text.includes('project') || text.includes('react') || text.includes('next.js') || text.includes('software') || text.includes('development') || text.includes('api')) {
+    return '/card-backgrounds/enterprise-software-development.jpeg';
+  }
+
+  if (text.includes('insight') || text.includes('thought') || text.includes('future')) {
+    return '/card-backgrounds/ai-insights.png';
+  }
+
+  return '/card-backgrounds/portfolio-screenshot.png';
+};
+
+const getCardBackground = (subject: string): CSSProperties => {
+  const text = subject.toLowerCase();
+  const image = getCardImage(subject);
+  let palette = {
+    a: 'rgba(34, 211, 238, 0.34)',
+    b: 'rgba(59, 130, 246, 0.24)',
+    c: 'rgba(15, 23, 42, 0.94)',
+  };
+
+  if (text.includes('ai') || text.includes('automation') || text.includes('robot')) {
+    palette = { a: 'rgba(34, 211, 238, 0.42)', b: 'rgba(16, 185, 129, 0.22)', c: 'rgba(8, 47, 73, 0.92)' };
+  } else if (text.includes('cloud') || text.includes('aws') || text.includes('azure') || text.includes('docker') || text.includes('kubernetes')) {
+    palette = { a: 'rgba(56, 189, 248, 0.44)', b: 'rgba(99, 102, 241, 0.22)', c: 'rgba(15, 23, 42, 0.92)' };
+  } else if (text.includes('bank') || text.includes('fintech') || text.includes('mpesa') || text.includes('stripe') || text.includes('payment')) {
+    palette = { a: 'rgba(20, 184, 166, 0.38)', b: 'rgba(250, 204, 21, 0.16)', c: 'rgba(19, 78, 74, 0.92)' };
+  } else if (text.includes('erp') || text.includes('sap') || text.includes('postgres') || text.includes('operations')) {
+    palette = { a: 'rgba(14, 165, 233, 0.36)', b: 'rgba(168, 85, 247, 0.18)', c: 'rgba(30, 41, 59, 0.94)' };
+  } else if (text.includes('health')) {
+    palette = { a: 'rgba(45, 212, 191, 0.34)', b: 'rgba(34, 197, 94, 0.2)', c: 'rgba(6, 78, 59, 0.92)' };
+  } else if (text.includes('retail') || text.includes('manufacturing')) {
+    palette = { a: 'rgba(251, 146, 60, 0.28)', b: 'rgba(34, 211, 238, 0.22)', c: 'rgba(67, 56, 202, 0.84)' };
+  } else if (text.includes('logistics') || text.includes('telecom')) {
+    palette = { a: 'rgba(96, 165, 250, 0.34)', b: 'rgba(45, 212, 191, 0.2)', c: 'rgba(12, 74, 110, 0.92)' };
+  } else if (text.includes('travel') || text.includes('hospitality')) {
+    palette = { a: 'rgba(125, 211, 252, 0.34)', b: 'rgba(244, 114, 182, 0.16)', c: 'rgba(15, 118, 110, 0.82)' };
+  } else if (text.includes('security') || text.includes('compliance') || text.includes('lock')) {
+    palette = { a: 'rgba(34, 211, 238, 0.3)', b: 'rgba(248, 113, 113, 0.15)', c: 'rgba(15, 23, 42, 0.96)' };
+  }
+
+  return {
+    backgroundImage: `
+      linear-gradient(135deg, ${palette.c}, rgba(2, 6, 23, 0.7)),
+      url("${image}"),
+      radial-gradient(circle at 18% 18%, ${palette.a}, transparent 34%),
+      radial-gradient(circle at 86% 10%, ${palette.b}, transparent 32%),
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 18px)
+    `,
+    backgroundBlendMode: 'normal, luminosity, screen, screen, overlay',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
+};
 
 export default function HomePage() {
   return (
@@ -121,15 +203,15 @@ export default function HomePage() {
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
+              <motion.div style={getCardBackground('Platform Reliability')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
                 <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Platform Reliability</p>
                 <p className="mt-3 text-2xl font-semibold text-white">99.9%</p>
               </motion.div>
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
+              <motion.div style={getCardBackground('Solutions Delivered')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
                 <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Solutions Delivered</p>
                 <p className="mt-3 text-2xl font-semibold text-white">15+</p>
               </motion.div>
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
+              <motion.div style={getCardBackground('Support Coverage Security')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="rounded-3xl bg-slate-950/80 p-6 ring-1 ring-slate-800">
                 <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Support Coverage</p>
                 <p className="mt-3 text-2xl font-semibold text-white">24/7</p>
               </motion.div>
@@ -159,11 +241,11 @@ export default function HomePage() {
                 <p className="mt-4 text-slate-300">Integrated systems, intuitive dashboards, and secure APIs that keep teams connected and customers delighted.</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-3xl border border-white/10 bg-slate-950/75 p-5">
+                <div style={getCardBackground('Cloud adoption AWS Azure GCP')} className="rounded-3xl border border-white/10 bg-slate-950/75 p-5">
                   <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Cloud adoption</p>
                   <p className="mt-3 text-xl font-semibold text-white">AWS, Azure, GCP</p>
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-slate-950/75 p-5">
+                <div style={getCardBackground('Security compliance support')} className="rounded-3xl border border-white/10 bg-slate-950/75 p-5">
                   <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Security</p>
                   <p className="mt-3 text-xl font-semibold text-white">24/7 compliance support</p>
                 </div>
@@ -184,11 +266,11 @@ export default function HomePage() {
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6">
+              <div style={getCardBackground('Mission cloud AI enterprise systems')} className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6">
                 <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Mission</p>
                 <p className="mt-4 text-slate-200">Empower organizations with future-ready technology and trusted delivery across cloud, AI, and enterprise systems.</p>
               </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6">
+              <div style={getCardBackground('Vision resilient digital transformation')} className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6">
                 <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Vision</p>
                 <p className="mt-4 text-slate-200">To be the leading partner for resilient digital transformation in fast-moving industries worldwide.</p>
               </div>
@@ -208,7 +290,7 @@ export default function HomePage() {
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <motion.article key={service.title} whileHover={{ y: -6 }} className="group rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition duration-300 hover:border-cyan-400/40 hover:bg-slate-900/95">
+              <motion.article key={service.title} style={getCardBackground(`${service.title} ${service.description}`)} whileHover={{ y: -6 }} className="group rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition duration-300 hover:border-cyan-400/40 hover:bg-slate-900/95">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300 shadow-[0_12px_30px_rgba(14,165,233,0.08)]">
                   <Icon className="h-6 w-6" />
                 </div>
@@ -230,7 +312,7 @@ export default function HomePage() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {['Next.js', 'React', 'Node.js', 'Python', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'Power BI', 'SAP', 'PostgreSQL', 'GraphQL'].map((tech) => (
-                <div key={tech} className="rounded-3xl border border-slate-800 bg-slate-900/80 px-5 py-4 text-center text-sm uppercase tracking-[0.3em] text-slate-300">
+                <div key={tech} style={getCardBackground(tech)} className="rounded-3xl border border-slate-800 bg-slate-900/80 px-5 py-4 text-center text-sm uppercase tracking-[0.3em] text-slate-200">
                   {tech}
                 </div>
               ))}
@@ -247,7 +329,7 @@ export default function HomePage() {
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {industries.map((industry) => (
-            <motion.div key={industry} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition hover:border-cyan-400/30">
+            <motion.div key={industry} style={getCardBackground(industry)} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition hover:border-cyan-400/30">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300">
                 <FaIndustry className="h-5 w-5" />
               </div>
@@ -267,7 +349,7 @@ export default function HomePage() {
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-4 lg:grid-cols-6">
             {['AWS', 'Azure', 'React', 'Docker', 'Kubernetes', 'SAP', 'Stripe', 'Mpesa'].map((tech) => (
-              <motion.div key={tech} whileHover={{ scale: 1.05 }} className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 text-center transition">
+              <motion.div key={tech} style={getCardBackground(tech)} whileHover={{ scale: 1.05 }} className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 text-center transition">
                 <p className="text-lg font-semibold text-white">{tech}</p>
               </motion.div>
             ))}
@@ -276,8 +358,8 @@ export default function HomePage() {
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-300">Who we work with</p>
             <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {['Startups', 'SMEs', 'Enterprises', 'NGOs', 'Government', 'Healthcare', 'Fintech'].map((client) => (
-                <div key={client} className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-center">
-                  <p className="text-sm text-slate-300">{client}</p>
+                <div key={client} style={getCardBackground(client)} className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-center">
+                  <p className="text-sm font-medium text-slate-100">{client}</p>
                 </div>
               ))}
             </div>
@@ -299,7 +381,7 @@ export default function HomePage() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {featuredProjects.map((project) => (
-              <motion.article key={project.title} whileHover={{ y: -6 }} className="group overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 shadow-card transition hover:border-cyan-400/40">
+              <motion.article key={project.title} style={getCardBackground(`${project.title} ${project.description} ${project.tags.join(' ')}`)} whileHover={{ y: -6 }} className="group overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 shadow-card transition hover:border-cyan-400/40">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Project</p>
@@ -333,22 +415,22 @@ export default function HomePage() {
             <p className="mx-auto max-w-2xl text-slate-400">A structured approach that ensures successful delivery, from discovery to deployment and beyond.</p>
           </div>
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="text-center">
+            <motion.div style={getCardBackground('Discovery business analysis')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="rounded-[2rem] border border-slate-800 p-6 text-center">
               <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/10 text-2xl font-bold text-cyan-300">01</div>
               <h3 className="text-xl font-semibold text-white">Discovery</h3>
               <p className="mt-2 text-slate-400">Understanding business challenges and technical requirements through in-depth analysis.</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-center">
+            <motion.div style={getCardBackground('Strategy Architecture scalable systems')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="rounded-[2rem] border border-slate-800 p-6 text-center">
               <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/10 text-2xl font-bold text-cyan-300">02</div>
               <h3 className="text-xl font-semibold text-white">Strategy & Architecture</h3>
               <p className="mt-2 text-slate-400">Planning secure and scalable system design with cutting-edge technology stacks.</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="text-center">
+            <motion.div style={getCardBackground('Development Integration software APIs')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="rounded-[2rem] border border-slate-800 p-6 text-center">
               <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/10 text-2xl font-bold text-cyan-300">03</div>
               <h3 className="text-xl font-semibold text-white">Development & Integration</h3>
               <p className="mt-2 text-slate-400">Agile implementation with continuous collaboration and rigorous testing.</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="text-center">
+            <motion.div style={getCardBackground('Deployment Optimization cloud monitoring')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="rounded-[2rem] border border-slate-800 p-6 text-center">
               <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/10 text-2xl font-bold text-cyan-300">04</div>
               <h3 className="text-xl font-semibold text-white">Deployment & Optimization</h3>
               <p className="mt-2 text-slate-400">Monitoring, scaling, and long-term support for sustained performance.</p>
@@ -382,7 +464,7 @@ export default function HomePage() {
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {features.map((feature) => (
-            <motion.article key={feature.title} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition hover:border-cyan-400/30">
+            <motion.article key={feature.title} style={getCardBackground(`${feature.title} ${feature.description}`)} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 transition hover:border-cyan-400/30">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300">
                 <FaCheckCircle className="h-5 w-5" />
               </div>
@@ -407,7 +489,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="grid gap-4 rounded-[2rem] border border-slate-800 bg-slate-900/80 p-8">
+              <div style={getCardBackground('Contact secure global delivery')} className="grid gap-4 rounded-[2rem] border border-slate-800 bg-slate-900/80 p-8">
                 <div className="flex items-start gap-4">
                   <span className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300">
                     <FaEnvelope className="h-5 w-5" />
@@ -451,21 +533,21 @@ export default function HomePage() {
             <p className="mx-auto max-w-2xl text-slate-400">Stay ahead with our latest insights on AI, cloud, and enterprise innovation.</p>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <motion.article whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
+            <motion.article style={getCardBackground('AI African Enterprises automation')} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
               <h3 className="text-xl font-semibold text-white">The Future of AI in African Enterprises</h3>
               <p className="mt-3 text-slate-400">How AI is reshaping business operations across the continent, with real-world case studies.</p>
               <Link href="/blog/ai-african-enterprises" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200">
                 Read more <FaArrowRight className="h-3.5 w-3.5" />
               </Link>
             </motion.article>
-            <motion.article whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
+            <motion.article style={getCardBackground('Mpesa Integrations payments financial services')} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
               <h3 className="text-xl font-semibold text-white">How Mpesa Integrations Are Transforming Payments</h3>
               <p className="mt-3 text-slate-400">Secure integration strategies for modern payment systems and financial services.</p>
               <Link href="/blog/mpesa-integrations" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200">
                 Read more <FaArrowRight className="h-3.5 w-3.5" />
               </Link>
             </motion.article>
-            <motion.article whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
+            <motion.article style={getCardBackground('ERP Strategies cloud infrastructure')} whileHover={{ y: -4 }} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-6 transition">
               <h3 className="text-xl font-semibold text-white">Modern ERP Strategies for Growing Businesses</h3>
               <p className="mt-3 text-slate-400">Why secure cloud infrastructure matters for enterprise scalability and compliance.</p>
               <Link href="/blog/erp-strategies" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200">

@@ -18,11 +18,24 @@ export function ContactForm() {
 
     const subject = encodeURIComponent(`SAILTEKS SOLUTIONS website inquiry from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-window.location.href = `mailto:sailtechsolutions1@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:sailtechsolutions1@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-8 shadow-card">
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        backgroundImage: `
+          linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(8, 47, 73, 0.82)),
+          url("/card-backgrounds/it-consultancy.jpeg"),
+          radial-gradient(circle at 18% 18%, rgba(34, 211, 238, 0.34), transparent 34%),
+          radial-gradient(circle at 88% 10%, rgba(20, 184, 166, 0.2), transparent 30%),
+          repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 18px)
+        `,
+        backgroundBlendMode: 'normal, luminosity, screen, screen, overlay',
+      }}
+      className="rounded-[2rem] border border-slate-800 bg-slate-900/80 bg-cover bg-center p-8 shadow-card"
+    >
       <div className="space-y-6">
         <div>
           <label htmlFor="name" className="text-sm font-semibold text-slate-300">
